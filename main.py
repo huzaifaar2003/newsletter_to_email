@@ -1,11 +1,13 @@
 import requests
 from send_email import send_mail
+topic = "tesla"
 API_KEY = "31a91e4e6dd24e138b4c7edb7b32e305"
 url = ("https://newsapi.org/v2/everything?"
-       "q=tesla&from=2025-04-29&sortBy=publishedAt"
+       f"q={topic}&from=2025-04-29&sortBy=publishedAt"
        "&language=en&apiKey=31a91e4e6dd24e138b4c7edb7b32e305")
 
 # filtered the results to only give news in English by adding "&language=en" to the url
+# "q=tesla" can be chaged to other subject matters of interest
 
 # adding a headers variable to put into the requests.get() as the argument for the "headers" parameter
 # did that since I was getting a return of "Edge: Too Many Requests"
@@ -29,7 +31,9 @@ body = ""
 for i in range(0,5):
     article = content["articles"][i]
     if article["title"] is not None:
-        body = body + article["title"] + "\n"  + article["description"] + "\n\n"
+        body = body + article["title"] \
+               + "\n"  + article["description"]\
+               + "\n"  + article["url"] + "\n\n"
 
 
 
