@@ -1,7 +1,11 @@
 import requests
 from send_email import send_mail
 API_KEY = "31a91e4e6dd24e138b4c7edb7b32e305"
-url = "https://newsapi.org/v2/everything?q=tesla&from=2025-04-29&sortBy=publishedAt&apiKey=31a91e4e6dd24e138b4c7edb7b32e305"
+url = ("https://newsapi.org/v2/everything?"
+       "q=tesla&from=2025-04-29&sortBy=publishedAt"
+       "&language=en&apiKey=31a91e4e6dd24e138b4c7edb7b32e305")
+
+# filtered the results to only give news in English by adding "&language=en" to the url
 
 # adding a headers variable to put into the requests.get() as the argument for the "headers" parameter
 # did that since I was getting a return of "Edge: Too Many Requests"
@@ -19,20 +23,30 @@ print(content,"\n")
 
 
 
-# extracting top 5 stories' information
-message = []
+# extracting the 5 most recent stories' information
+
 body = ""
 for i in range(0,5):
     article = content["articles"][i]
-
-    body = body + article["title"] + "\n"  + article["description"] + "\n\n"
+    if article["title"] is not None:
+        body = body + article["title"] + "\n"  + article["description"] + "\n\n"
 
 
 
 print("Str: \n",body)
 
-complete_message = body.encode('utf-8')
+
 # convert string to unicode by using
 # .encode() method for strings
 
-send_mail(message = complete_message    , username= "automated.huzaifaar2003@gmail.com")
+# adding a subject to the email
+final_message = f"""Subject: Your Daily Newsletter
+        \n
+        {body}
+        """
+
+
+final_message = final_message.encode('utf-8')
+
+
+send_mail(message = final_message,username= "automated.huzaifaar2003@gmail.com")
