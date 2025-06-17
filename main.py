@@ -7,7 +7,7 @@ url = ("https://newsapi.org/v2/everything?"
        "&language=en&apiKey=31a91e4e6dd24e138b4c7edb7b32e305")
 
 # filtered the results to only give news in English by adding "&language=en" to the url
-# "q=tesla" can be chaged to other subject matters of interest
+# "q=tesla" can be changed to other subject matters of interest
 
 # adding a headers variable to put into the requests.get() as the argument for the "headers" parameter
 # did that since I was getting a return of "Edge: Too Many Requests"
